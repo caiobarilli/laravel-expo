@@ -51,4 +51,11 @@ if [ "$str" = "permissions" ]; then
     chown -R 1000:1000 ./
     chmod o+w ./storage/ -R
     "
+
+fi
+# Permissões do do container
+if [ "$str" = "lumen-permissions" ]; then
+    docker exec -it $container_id /bin/bash -c "
+    chown -R 1000:1000 ./
+    "
 fi
