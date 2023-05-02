@@ -2,9 +2,9 @@
 
 <br />
 
-| Software    | Port |
-| ----------- | ---- |
-| **laravel** | 8000 |
-| **expo**    | 9001 |
+| Project     | Software    | Port |
+| ----------- | ----------- | ---- |
+| **app**     | **expo**    | 9001 |
+| **backend** | **laravel** | 8000 |
 
 <br />
