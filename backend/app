@@ -9,53 +9,36 @@ if [ "$str" = "bash" ]; then
 fi
 
 # Instala o Laravel
-if [ "$str" = "install" ]; then
+if [ "$str" = "laravel:install" ]; then
     docker exec -it $container_id /bin/bash -c "
-    composer create-project laravel/laravel laravel
-    "
-
-    docker exec -it $container_id /bin/bash -c "
-    cd ./laravel
-    mv .editorconfig /var/www/html
-    mv .env /var/www/html
-    mv .env.example /var/www/html
-    mv .gitattributes /var/www/html
-    mv .gitignore /var/www/html
-    mv * /var/www/html
-    rm -rf /var/www/html/laravel
+    rm -rf *.*
+    composer create-project laravel/laravel .
+    ls -la
     "
 fi
 
 # Instala o Lumen
-if [ "$str" = "lumen" ]; then
+if [ "$str" = "lumen:install" ]; then
     docker exec -it $container_id /bin/bash -c "
-    composer create-project --prefer-dist laravel/lumen lumen
-    "
-
-    docker exec -it $container_id /bin/bash -c "
-    cd ./lumen
-    mv .editorconfig /var/www/html
-    mv .env /var/www/html
-    mv .env.example /var/www/html
-    mv .gitignore /var/www/html
-    mv .styleci.yml /var/www/html
-    mv * /var/www/html
-    rm -rf /var/www/html/lumen
+    rm -rf *.*
+    composer create-project --prefer-dist laravel/lumen .
+    ls -la
     "
 fi
 
-# Permissões do do container
-if [ "$str" = "permissions" ]; then
+# Permissões do container
+if [ "$str" = "laravel:permissions" ]; then
     docker exec -it $container_id /bin/bash -c "
-    php artisan storage:link
     chown -R 1000:1000 ./
+    php artisan storage:link
     chmod o+w ./storage/ -R
     "
-
 fi
-# Permissões do do container
-if [ "$str" = "lumen-permissions" ]; then
+
+# Permissões do container
+if [ "$str" = "lumen:permissions" ]; then
     docker exec -it $container_id /bin/bash -c "
     chown -R 1000:1000 ./
+    ls -la
     "
 fi

@@ -16,3 +16,18 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
+// API
+Route::group([
+    'prefix' => 'api'
+], function () {
+
+    // Auth
+    Route::group([
+        'prefix' => 'auth'
+    ], function () {
+        Route::post('register', 'AuthController@register');
+        Route::post('login', 'AuthController@login');
+        Route::post('profile', 'AuthController@profile');
+    });
+});
