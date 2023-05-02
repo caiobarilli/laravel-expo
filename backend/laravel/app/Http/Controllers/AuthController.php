@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -30,7 +29,7 @@ class AuthController extends Controller
 
         $credentials = $request->only(['email', 'password']);
 
-        if (!$token = Auth::attempt($credentials)) {
+        if (!$token = auth()->attempt($credentials)) {
             return response()->json(['message' => 'Unauthorized'], 401);
         }
 
@@ -76,8 +75,7 @@ class AuthController extends Controller
      */
     public function logout()
     {
-        Auth::logout();
-
+        auth()->logout();
         return response()->json(['message' => 'User successfully signed out']);
     }
 
