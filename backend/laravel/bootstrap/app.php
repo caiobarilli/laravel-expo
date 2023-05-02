@@ -61,6 +61,7 @@ $app->singleton(
 
 config(['app.locale' => 'pt_BR']);
 $app->configure('app');
+$app->configure('jwt');
 
 /*
 |--------------------------------------------------------------------------

@@ -19,7 +19,7 @@ $router->get('/', function () use ($router) {
 
 // API
 Route::group([
-    'prefix' => 'api'
+    'prefix' => 'api',
 ], function () {
 
     // Auth
@@ -28,6 +28,19 @@ Route::group([
     ], function () {
         Route::post('register', 'AuthController@register');
         Route::post('login', 'AuthController@login');
+    });
+    Route::group([
+        'prefix' => 'auth',
+        'middleware' => 'auth:api'
+    ], function () {
+        Route::post('logout', 'AuthController@logout');
+    });
+
+    // User
+    Route::group([
+        'prefix' => 'user',
+        'middleware' => 'auth:api'
+    ], function () {
         Route::post('profile', 'AuthController@profile');
     });
 });

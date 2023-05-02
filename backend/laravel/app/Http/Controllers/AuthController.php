@@ -70,6 +70,18 @@ class AuthController extends Controller
     }
 
     /**
+     * Log the user out (Invalidate the token).
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function logout()
+    {
+        Auth::logout();
+
+        return response()->json(['message' => 'User successfully signed out']);
+    }
+
+    /**
      * Get the token array structure.
      *
      * @param  string $token
