@@ -35,12 +35,12 @@ Acesse o bash do container com o comando:
 sh ./app bash
 
 // No bash do container execute os comando:
-
 composer install
 cp .env.example .env
 php artisan migrate:fresh --seed
 
-exit // para sair do bash do container
+// para sair do container execute os comando:
+exit 
 
 ```
 
