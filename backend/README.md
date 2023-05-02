@@ -1,4 +1,4 @@
-# Docker Laravel Boilerplate
+# Backend
 
 <br />
 
@@ -11,16 +11,6 @@
 ## Pré-requisitos
 
 Para começar, certifique-se de ter o [Docker](https://docs.docker.com/) e também o [Docker Compose](https://docs.docker.com/compose/install/) no seu sistema.
-
-<br />
-
-## Download
-
-Faça o download do projeto com o comando:
-
-```sh
-git clone git@github.com:caiobarilli/docker-laravel-boilerplate.git
-```
 
 <br />
 
@@ -38,16 +28,26 @@ Suba a primera vez os containers com o comando:
 docker-compose up
 ```
 
-Você pode instalar o laravel com o comando
+Acesse o bash do container com o comando:
 
 ```
-sh ./app install
+
+sh ./app bash
+
+// No bash do container execute os comando:
+
+composer install
+cp .env.example .env
+php artisan migrate:fresh --seed
+
+exit // para sair do bash do container
+
 ```
 
 Adicione as permissões da pasta storage com o comando
 
 ```
-sh ./app permissions
+sh ./app lumen:permissions
 ```
 
 acesse seu [navegador](http://localhost:8000/) para visualizar o projeto.
