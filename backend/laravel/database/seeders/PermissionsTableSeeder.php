@@ -11,7 +11,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
-class DatabaseSeeder extends Seeder
+class PermissionsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -20,7 +20,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
 
         // Roles
         $user = Role::create(['name' => 'user']);
@@ -57,7 +56,7 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'account_id' => $account->id,
             'first_name' => 'CEO',
-            'last_name' => '',
+            'last_name' => ' - My App',
             'email' => 'admin@admin.com',
             'password' => Hash::make('secret'),
             'remember_token' => Str::random(10),
@@ -68,7 +67,7 @@ class DatabaseSeeder extends Seeder
         $exempleUser = User::factory()->create([
             'account_id' => $account->id,
             'first_name' => 'TI',
-            'last_name' => '',
+            'last_name' => ' - My App',
             'email' => 'contato@admin.com',
             'password' => Hash::make('secret'),
             'remember_token' => Str::random(10),
