@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace App\Http\Providers;
 
 use Laravel\Lumen\Providers\EventServiceProvider as ServiceProvider;
 

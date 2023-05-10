@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Resources\UserCollection;
+use App\Http\Resources\UserCollection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 
