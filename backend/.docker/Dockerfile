@@ -47,6 +47,7 @@ RUN apk --no-cache add \
     php81-mysqli \
     php81-pdo \
     php81-pdo_mysql \
+    php81-pdo_sqlite \
     php81-gd
 
 # Installing composer
