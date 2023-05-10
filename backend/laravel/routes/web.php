@@ -24,23 +24,31 @@ Route::group([
 
     // Auth
     Route::group([
-        'prefix' => 'auth'
+        'prefix' => 'auth',
     ], function () {
         Route::post('register', 'AuthController@register');
         Route::post('login', 'AuthController@login');
-    });
-    Route::group([
-        'prefix' => 'auth',
-        'middleware' => 'auth:api'
-    ], function () {
-        Route::post('logout', 'AuthController@logout');
+
+        Route::group([
+            'middleware' => 'auth:api'
+        ], function () {
+            Route::post('logout', 'AuthController@logout');
+        });
     });
 
     // User
     Route::group([
         'prefix' => 'user',
-        'middleware' => 'auth:api'
+        'middleware' =>  'auth:api'
     ], function () {
         Route::post('profile', 'AuthController@profile');
+    });
+
+    // Users
+    Route::group([
+        'prefix' => 'users',
+        'middleware' => 'role:owner',
+    ], function () {
+        Route::get('/', 'UsersController@index');
     });
 });
