@@ -50,8 +50,7 @@ if [ "$str" = "lumen:permissions" ]; then
     "
 fi
 
-
-# Permissões do container
+# Testes do Lumen
 if [ "$str" = "lumen:test" ]; then
     docker exec -it $container_id /bin/bash -c "
     ./vendor/bin/phpunit
