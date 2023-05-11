@@ -49,3 +49,11 @@ if [ "$str" = "lumen:permissions" ]; then
     ls -la
     "
 fi
+
+
+# Permissões do container
+if [ "$str" = "lumen:test" ]; then
+    docker exec -it $container_id /bin/bash -c "
+    ./vendor/bin/phpunit
+    "
+fi
