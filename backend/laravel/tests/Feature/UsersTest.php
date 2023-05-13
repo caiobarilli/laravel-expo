@@ -48,6 +48,59 @@ class UsersTest extends TestCase
 
     public function test_cannot_list_users()
     {
-        $this->actingAs($this->user)->get('api/users')->assertResponseStatus(403);
+        $this->withoutMiddleware();
+
+        Role::create(['name' => 'user']);
+
+        User::factory()->count(5)->create(['account_id' =>  $this->user->account_id])
+            ->each(function (User $user) {
+                $user->assignRole('user');
+            });
+
+        $this->actingAs($this->user)
+            ->get('api/users')
+            ->assertResponseStatus(403);
+    }
+
+    public function test_can_list_users()
+    {
+        $this->withoutMiddleware();
+
+        Role::create(['name' => 'user']);
+
+        User::factory()->count(5)->create(['account_id' => $this->user->account_id])
+            ->each(function (User $user) {
+                $user->assignRole('user');
+            });
+
+        $this->privilegedUser = User::first()->removeRole('user')->assignRole('owner');
+
+        $this->actingAs($this->privilegedUser)
+            ->get('api/users')
+            ->assertResponseStatus(200);
+    }
+
+    public function test_can_search_for_users()
+    {
+        $this->withoutMiddleware();
+
+        Role::create(['name' => 'user']);
+
+        User::factory()->count(5)->create(['account_id' => $this->user->account_id])
+            ->each(function (User $user) {
+                $user->assignRole('user');
+            });
+
+        User::first()->update([
+            'first_name' => 'Greg',
+            'last_name' => 'Andersson',
+            'role' => 'owner'
+        ]);
+
+        $this->privilegedUser = User::first()->removeRole('user')->assignRole('owner');
+
+        $this->actingAs($this->privilegedUser)
+            ->get('api/users?search=Greg')
+            ->assertResponseStatus(200);
     }
 }
