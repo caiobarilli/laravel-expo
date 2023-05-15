@@ -17,15 +17,6 @@ if [ "$str" = "laravel:install" ]; then
     "
 fi
 
-# Instala o Lumen
-if [ "$str" = "lumen:install" ]; then
-    docker exec -it $container_id /bin/bash -c "
-    rm -rf *.*
-    composer create-project --prefer-dist laravel/lumen .
-    ls -la
-    "
-fi
-
 # Permissões do container
 if [ "$str" = "laravel:permissions" ]; then
     docker exec -it $container_id /bin/bash -c "
@@ -38,6 +29,15 @@ if [ "$str" = "laravel:permissions" ]; then
     "
 fi
 
+# Instala o Lumen
+if [ "$str" = "lumen:install" ]; then
+    docker exec -it $container_id /bin/bash -c "
+    rm -rf *.*
+    composer create-project --prefer-dist laravel/lumen .
+    ls -la
+    "
+fi
+
 # Permissões do container
 if [ "$str" = "lumen:permissions" ]; then
     docker exec -it $container_id /bin/bash -c "
@@ -47,6 +47,13 @@ if [ "$str" = "lumen:permissions" ]; then
     chown -R www-data:www-data /var/www/html/storage
     chmod o+w /var/www/html/storage/ -R
     ls -la
+    "
+fi
+
+# Testes do Lumen
+if [ "$str" = "lumen:migrate" ]; then
+    docker exec -it $container_id /bin/bash -c "
+    php artisan migrate:fresh --seed
     "
 fi
 
