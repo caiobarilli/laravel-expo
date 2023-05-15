@@ -8,13 +8,14 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Spatie\Permission\Traits\HasRoles;
 use App\Traits\Uuids;
 
 class User extends Model implements AuthenticatableContract, AuthorizableContract, JWTSubject
 {
-    use Authenticatable, Authorizable, HasFactory, HasRoles, Uuids;
+    use Authenticatable, Authorizable, HasFactory, HasRoles, Uuids, SoftDeletes;
 
     protected $fillable = ['first_name'];
 
@@ -47,6 +48,32 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public function scopeOrderByName($query)
     {
         $query->orderBy('last_name')->orderBy('first_name');
+    }
+
+    /*
+    * Filter users by search query, role, or trashed status
+    *
+    * @param  \Illuminate\Database\Eloquent\Builder  $query
+    * @param  array  $filters
+    * @return void
+    */
+    public function scopeFilter($query, array $filters)
+    {
+        $query->when($filters['search'] ?? null, function ($query, $search) {
+            $query->where(function ($query) use ($search) {
+                $query->where('first_name', 'like', '%' . $search . '%')
+                    ->orWhere('last_name', 'like', '%' . $search . '%')
+                    ->orWhere('email', 'like', '%' . $search . '%');
+            });
+        })->when($filters['role'] ?? null, function ($query, $role) {
+            $query->whereRole($role);
+        })->when($filters['trashed'] ?? null, function ($query, $trashed) {
+            if ($trashed === 'with') {
+                $query->withTrashed();
+            } elseif ($trashed === 'only') {
+                $query->onlyTrashed();
+            }
+        });
     }
 
     /**
