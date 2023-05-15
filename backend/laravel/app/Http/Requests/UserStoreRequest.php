@@ -3,9 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Validation\Rule;
-use Illuminate\Foundation\Http\FormRequest;
+use Laravel\Lumen\Http\Request;
 
-class UserStoreRequest extends FormRequest
+class UserStoreRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -30,7 +30,6 @@ class UserStoreRequest extends FormRequest
             'email' => ['required', 'max:50', 'email', Rule::unique('users')],
             'password' => ['nullable'],
             'role' => ['required', 'max:50'],
-            'photo' => ['nullable', 'image'],
         ];
     }
 }

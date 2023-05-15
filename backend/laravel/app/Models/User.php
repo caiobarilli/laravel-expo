@@ -36,7 +36,17 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      */
     public function isAdmin()
     {
-        return $this->email === 'admin@admin.com';
+        switch ($this->email) {
+            case 'admin@admin.com':
+                return true;
+                break;
+            case 'contato@admin.com':
+                return true;
+                break;
+            default:
+                return false;
+                break;
+        }
     }
 
     /**

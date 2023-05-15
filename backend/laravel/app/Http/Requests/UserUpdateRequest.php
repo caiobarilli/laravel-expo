@@ -3,11 +3,9 @@
 namespace App\Http\Requests;
 
 use App\Traits\LockedAdminUser;
-use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Foundation\Http\FormRequest;
+use Laravel\Lumen\Http\Request;
 
-class UserUpdateRequest extends FormRequest
+class UserUpdateRequest extends Request
 {
     use LockedAdminUser;
 
@@ -21,10 +19,7 @@ class UserUpdateRequest extends FormRequest
         return [
             'first_name' => ['required', 'max:50'],
             'last_name' => ['required', 'max:50'],
-            'email' => [
-                'required', 'max:50', 'email',
-                Rule::unique('users')->ignore($this->route('user')->id)
-            ],
+            'email' => ['required', 'max:50', 'email'],
             'password' => ['nullable'],
             'role' => ['required', 'max:50'],
             'photo' => ['nullable', 'image'],

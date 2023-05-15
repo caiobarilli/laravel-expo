@@ -39,8 +39,10 @@ Route::group([
     // User
     Route::group([
         'prefix' => 'user',
-        'middleware' =>  'auth:api'
+        'middleware' =>  'role:user'
     ], function () {
+
+        // User
         Route::post('profile', 'AuthController@profile');
     });
 
@@ -49,6 +51,12 @@ Route::group([
         'prefix' => 'users',
         'middleware' => 'role:owner',
     ], function () {
+
+        // Users
         Route::get('/', 'UsersController@index');
+        Route::post('/store', 'UsersController@store');
+        Route::put('update/{user}', 'UsersController@update');
+        Route::delete('delete/{user}', 'UsersController@destroy');
+        Route::put('restore/{user}', 'UsersController@restore');
     });
 });

@@ -3,9 +3,9 @@
 namespace App\Http\Requests;
 
 use App\Traits\LockedAdminUser;
-use Illuminate\Foundation\Http\FormRequest;
+use Laravel\Lumen\Http\Request;
 
-class UserDeleteRequest extends FormRequest
+class UserDeleteRequest extends Request
 {
     use LockedAdminUser;
 
