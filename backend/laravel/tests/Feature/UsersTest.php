@@ -18,8 +18,6 @@ class UsersTest extends TestCase
     {
         parent::setUp();
 
-        $owner = Role::create(['name' => 'owner']);
-
         $permissions = [
             'users-list',
             'users-create',
@@ -33,7 +31,11 @@ class UsersTest extends TestCase
 
         $permissions = Permission::pluck('id', 'id')->all();
 
+        $owner = Role::create(['name' => 'owner']);
+
         $owner->syncPermissions($permissions);
+
+        Role::create(['name' => 'user']);
 
         $account = Account::create(['name' => 'Acme Corporation']);
 
@@ -42,20 +44,13 @@ class UsersTest extends TestCase
             'first_name' => 'João',
             'last_name' => 'Silva',
             'email' => 'joaodasilva@email.com',
-            'role' => 'owner',
-        ])->assignRole($owner);
+            'role' => 'user'
+        ])->assignRole('user');
     }
 
     public function test_cannot_list_users()
     {
         $this->withoutMiddleware();
-
-        Role::create(['name' => 'user']);
-
-        User::factory()->count(5)->create(['account_id' =>  $this->user->account_id])
-            ->each(function (User $user) {
-                $user->assignRole('user');
-            });
 
         $this->actingAs($this->user)
             ->get('api/users')
@@ -65,8 +60,6 @@ class UsersTest extends TestCase
     public function test_can_list_users()
     {
         $this->withoutMiddleware();
-
-        Role::create(['name' => 'user']);
 
         User::factory()->count(5)->create(['account_id' => $this->user->account_id])
             ->each(function (User $user) {
@@ -84,16 +77,13 @@ class UsersTest extends TestCase
     {
         $this->withoutMiddleware();
 
-        Role::create(['name' => 'user']);
-
-        User::factory()->count(5)->create(['account_id' => $this->user->account_id])
+        User::factory()->create(['account_id' => $this->user->account_id])
             ->each(function (User $user) {
                 $user->assignRole('user');
             });
 
         User::first()->update([
             'first_name' => 'Greg',
-            'last_name' => 'Andersson',
             'role' => 'owner'
         ]);
 
