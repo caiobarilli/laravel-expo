@@ -27,8 +27,8 @@ class UserStoreRequest extends Request
         return [
             'first_name' => ['required', 'max:50'],
             'last_name' => ['required', 'max:50'],
-            'email' => ['required', 'max:50', 'email', Rule::unique('users')],
-            'password' => ['nullable'],
+            'email' => 'required|string|email|unique:users',
+            'password' => 'required|string|confirmed',
             'role' => ['required', 'max:50'],
         ];
     }

@@ -8,11 +8,38 @@ use App\Models\User;
 use Laravel\Lumen\Testing\DatabaseMigrations;
 use Laravel\Lumen\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class AuthTest extends TestCase
 {
     use DatabaseMigrations;
     use DatabaseTransactions;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $permissions = [
+            'users-list',
+            'users-create',
+            'users-edit',
+            'users-delete'
+        ];
+
+        foreach ($permissions as $permission) {
+            Permission::create(['name' => $permission]);
+        }
+
+        $permissions = Permission::pluck('id', 'id')->all();
+
+        $owner = Role::create(['name' => 'owner']);
+
+        $owner->syncPermissions($permissions);
+
+        Role::create(['name' => 'user']);
+    }
+
 
     public function testLoginWithValidCredentials()
     {
@@ -74,5 +101,23 @@ class AuthTest extends TestCase
         $response->seeJson([
             'message' => 'User successfully signed out',
         ])->assertResponseStatus(200);
+    }
+
+    public function testRegisterNewUser()
+    {
+
+        $account = Account::create(['name' => 'My App']);
+
+        $response = $this->json('POST', 'api/auth/register', [
+            'first_name' => 'João',
+            'last_name' => 'Silva',
+            'email' => 'Silva@example.com',
+            'password' => 'secret',
+            'password_confirmation' => 'secret',
+        ]);
+
+        $response->seeJson([
+            'message' => 'User successfully registered',
+        ])->assertResponseStatus(201);
     }
 }

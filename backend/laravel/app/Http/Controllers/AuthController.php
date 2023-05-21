@@ -52,8 +52,15 @@ class AuthController extends Controller
 
         $account = Account::where('name', 'My App')->first();
 
+        $this->validate($request, [
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'email' => 'required|string|email|unique:users',
+            'password' => 'required|string|confirmed',
+        ]);
+
         $user = User::create([
-            'account_id' => $account->id,
+            'account_id' => $request->account_id ?? $account->id,
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'email' => $request->email,
