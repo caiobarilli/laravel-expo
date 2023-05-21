@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Account;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -35,7 +36,7 @@ class AuthController extends Controller
         $credentials = $request->only(['email', 'password']);
 
         if (!$token = auth()->attempt($credentials)) {
-            return response()->json(['message' => 'Unauthorized'], 401);
+            return response()->json(['error' => 'invalid credentials'], 203);
         }
 
         return $this->createNewToken($token);
@@ -48,14 +49,13 @@ class AuthController extends Controller
      */
     public function register(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required|string',
-            'email' => 'required|string|email|unique:users',
-            'password' => 'required|string|confirmed',
-        ]);
+
+        $account = Account::where('name', 'My App')->first();
 
         $user = User::create([
-            'name' => $request->name,
+            'account_id' => $account->id,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => 'user',
@@ -63,7 +63,7 @@ class AuthController extends Controller
 
         $user->assignRole('user');
 
-        return response()->json(['message' => 'User successfully registered', 'user' => $user], 201);
+        return response()->json(['message' => 'User successfully registered'], 201);
     }
 
     /**
@@ -101,7 +101,6 @@ class AuthController extends Controller
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60 * 24,
-            'user' => auth()->user()
         ]);
     }
 }

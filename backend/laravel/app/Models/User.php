@@ -17,7 +17,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 {
     use Authenticatable, Authorizable, HasFactory, HasRoles, Uuids, SoftDeletes;
 
-    protected $fillable = ['first_name'];
+    protected $fillable = ['first_name', 'last_name', 'email', 'password', 'account_id', 'role'];
 
     /**
      * The attributes that are mass assignable.
