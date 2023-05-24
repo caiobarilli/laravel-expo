@@ -1,8 +1,8 @@
 import { registerRootComponent } from "expo";
-import Login from "./screens/Login";
+import App from "./App";
 
-function App() {
-  return <Login />;
+function Index() {
+  return <App />;
 }
 
-registerRootComponent(App);
+registerRootComponent(Index);
