@@ -1,7 +1,11 @@
 import React from "react";
 import * as S from "./styles";
 
-export default () => (
+interface LoginProps {
+  navigation: any;
+}
+
+export default ({ navigation }: LoginProps) => (
   <S.Container>
     <S.FormContainer>
       <S.Title>Login</S.Title>
@@ -11,5 +15,10 @@ export default () => (
         <S.ButtonText>Login</S.ButtonText>
       </S.Button>
     </S.FormContainer>
+
+    <S.RegisterButton
+      title="Go to Register"
+      onPress={() => navigation.navigate("Register")}
+    />
   </S.Container>
 );
