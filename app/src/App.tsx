@@ -6,6 +6,17 @@ import { registerRootComponent } from "expo";
 import { Asset } from "expo-asset";
 import Constants from "expo-constants";
 import * as SplashScreen from "expo-splash-screen";
+import {
+  useFonts,
+  Roboto_400Regular,
+  Roboto_400Regular_Italic,
+  Roboto_500Medium,
+  Roboto_700Bold,
+  Roboto_900Black,
+} from "@expo-google-fonts/roboto";
+import { ThemeProvider } from "styled-components";
+import theme from "./styles/theme";
+import * as S from "./styles/App";
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
@@ -92,46 +103,17 @@ function AnimatedSplashScreen({ children, image }: any) {
 
 function MainScreen({ navigation }: any) {
   return (
-    <View
-      style={{
-        flex: 1,
-        backgroundColor: "#fff",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <Text
-        style={{
-          color: "black",
-          fontSize: 30,
-          marginBottom: 15,
-          fontWeight: "bold",
-          textTransform: "uppercase",
-        }}
-      >
-        Welcome !
-      </Text>
-      <View
-        style={{
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
+    <S.Container>
+      <S.Title>Welcome !</S.Title>
+      <S.WelcomeWrapper>
         <Button title="Login" onPress={() => navigation.navigate("Login")} />
-        <Text
-          style={{
-            margin: 10,
-            textTransform: "uppercase",
-          }}
-        >
-          or
-        </Text>
+        <S.WelcomeParagraph>or</S.WelcomeParagraph>
         <Button
           title="Register"
           onPress={() => navigation.navigate("Register")}
         />
-      </View>
-    </View>
+      </S.WelcomeWrapper>
+    </S.Container>
   );
 }
 
@@ -165,20 +147,29 @@ function Register() {
 
 function App() {
   const Stack = createNativeStackNavigator();
+  const [fontsLoaded] = useFonts({
+    Roboto_400Regular,
+    Roboto_400Regular_Italic,
+    Roboto_500Medium,
+    Roboto_700Bold,
+    Roboto_900Black,
+  });
 
   return (
     <AnimatedAppLoader image={{ uri: Constants.manifest?.splash?.image }}>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Home">
-          <Stack.Screen
-            name="Home"
-            component={MainScreen}
-            options={{ header: () => null }}
-          />
-          <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="Register" component={Register} />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <ThemeProvider theme={theme}>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="Home">
+            <Stack.Screen
+              name="Home"
+              component={MainScreen}
+              options={{ header: () => null }}
+            />
+            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="Register" component={Register} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </ThemeProvider>
     </AnimatedAppLoader>
   );
 }
