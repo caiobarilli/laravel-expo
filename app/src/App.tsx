@@ -16,7 +16,9 @@ import {
 } from "@expo-google-fonts/roboto";
 import { ThemeProvider } from "styled-components";
 import theme from "./styles/theme";
-import * as S from "./styles/App";
+import Welcome from "./screens/Welcome";
+import Login from "./screens/Login";
+import Register from "./screens/Register";
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
@@ -102,47 +104,15 @@ function AnimatedSplashScreen({ children, image }: any) {
 }
 
 function MainScreen({ navigation }: any) {
-  return (
-    <S.Container>
-      <S.Title>Welcome !</S.Title>
-      <S.WelcomeWrapper>
-        <Button title="Login" onPress={() => navigation.navigate("Login")} />
-        <S.WelcomeParagraph>or</S.WelcomeParagraph>
-        <Button
-          title="Register"
-          onPress={() => navigation.navigate("Register")}
-        />
-      </S.WelcomeWrapper>
-    </S.Container>
-  );
+  return <Welcome navigation={navigation} />;
 }
 
-function Login() {
-  return (
-    <View
-      style={{
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <Text>Login</Text>
-    </View>
-  );
+function LoginScreen({ navigation }: any) {
+  return <Login navigation={navigation} />;
 }
 
-function Register() {
-  return (
-    <View
-      style={{
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <Text>Register</Text>
-    </View>
-  );
+function RegisterScreen({ navigation }: any) {
+  return <Register navigation={navigation} />;
 }
 
 function App() {
@@ -165,8 +135,16 @@ function App() {
               component={MainScreen}
               options={{ header: () => null }}
             />
-            <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="Register" component={Register} />
+            <Stack.Screen
+              name="Login"
+              component={LoginScreen}
+              options={{ header: () => null }}
+            />
+            <Stack.Screen
+              name="Register"
+              component={RegisterScreen}
+              options={{ header: () => null }}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </ThemeProvider>

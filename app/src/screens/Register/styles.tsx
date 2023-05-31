@@ -10,3 +10,8 @@ export const Title = styled.Text`
   font-size: 32px;
   text-transform: uppercase;
 `;
+
+export const RegisterButton = styled.Button`
+  margin: 60px;
+  flex: 1;
+`;
