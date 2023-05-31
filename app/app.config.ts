@@ -4,7 +4,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
   slug: "my-app",
   name: "My App",
-  icon: "https://github.com/expo/expo/blob/master/templates/expo-template-blank/assets/icon.png?raw=true",
+  icon: "./src/assets/icon.png",
   splash: {
     image:
       "https://github.com/expo/expo/blob/master/templates/expo-template-blank/assets/splash.png?raw=true",
