@@ -65,6 +65,7 @@ export const RegisterTextBold = styled.Text`
   text-align: center;
   color: #5c0c55;
   font-size: 12px;
+  font-family: ${({ theme }) => theme.fonts.bold};
 `;
 
 export const RegisterButton = styled.TouchableOpacity``;

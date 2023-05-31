@@ -18,7 +18,7 @@ export default ({ navigation }: LoginProps) => (
     <S.RegisterWrapper>
       <S.RegisterText>Don't have an account? </S.RegisterText>
       <S.RegisterButton onPress={() => navigation.navigate("Register")}>
-        <S.RegisterBold>Register a new account.</S.RegisterBold>
+        <S.RegisterTextBold>Register a new account.</S.RegisterTextBold>
       </S.RegisterButton>
     </S.RegisterWrapper>
   </S.Container>

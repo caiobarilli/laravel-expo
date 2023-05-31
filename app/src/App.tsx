@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Animated, StyleSheet, Text, View, Button } from "react-native";
+import { Animated, StyleSheet, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { registerRootComponent } from "expo";
@@ -59,10 +59,8 @@ function AnimatedSplashScreen({ children, image }: any) {
   const onImageLoaded = useCallback(async () => {
     try {
       await SplashScreen.hideAsync();
-      // Load stuff
       await Promise.all([]);
     } catch (e) {
-      // handle errors
     } finally {
       setAppReady(true);
     }
