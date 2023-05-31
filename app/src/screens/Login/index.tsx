@@ -15,10 +15,11 @@ export default ({ navigation }: LoginProps) => (
         <S.ButtonText>Login</S.ButtonText>
       </S.Button>
     </S.FormContainer>
-
-    <S.RegisterButton
-      title="Go to Register"
-      onPress={() => navigation.navigate("Register")}
-    />
+    <S.RegisterWrapper>
+      <S.RegisterText>Don't have an account? </S.RegisterText>
+      <S.RegisterButton onPress={() => navigation.navigate("Register")}>
+        <S.RegisterBold>Register a new account.</S.RegisterBold>
+      </S.RegisterButton>
+    </S.RegisterWrapper>
   </S.Container>
 );
