@@ -77,8 +77,6 @@ function AuthenticatedStack() {
 function App() {
   const authCtx = useContext(AuthContext);
 
-  console.log(authCtx);
-
   const [fontsLoaded] = useFonts({
     Roboto_400Regular,
     Roboto_400Regular_Italic,
