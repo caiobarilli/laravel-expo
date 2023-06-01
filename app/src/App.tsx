@@ -19,6 +19,10 @@ import Register from "./screens/Register";
 import { AnimatedAppLoader } from "./components/AnimatedAppLoader";
 import { StatusBar } from "expo-status-bar";
 
+import AuthContextProvider, { AuthContext } from "./utils/store/AuthContext";
+import { useContext } from "react";
+import { View, Text } from "react-native";
+
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
 function MainScreen({ navigation }: any) {
@@ -33,7 +37,7 @@ function RegisterScreen({ navigation }: any) {
   return <Register navigation={navigation} />;
 }
 
-function AuthenticatedStack() {
+function AuthStack() {
   const Stack = createNativeStackNavigator();
   return (
     <Stack.Navigator initialRouteName="Home">
@@ -56,8 +60,25 @@ function AuthenticatedStack() {
   );
 }
 
+function AuthenticatedStack() {
+  return (
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Text>AuthenticatedStack</Text>
+    </View>
+  );
+}
+
 function App() {
-  const Stack = createNativeStackNavigator();
+  const authCtx = useContext(AuthContext);
+
+  console.log(authCtx);
+
   const [fontsLoaded] = useFonts({
     Roboto_400Regular,
     Roboto_400Regular_Italic,
@@ -70,9 +91,11 @@ function App() {
     <AnimatedAppLoader image={{ uri: Constants.manifest?.splash?.image ?? "" }}>
       <StatusBar style="auto" />
       <ThemeProvider theme={theme}>
-        <NavigationContainer>
-          <AuthenticatedStack />
-        </NavigationContainer>
+        <AuthContextProvider>
+          <NavigationContainer>
+            {authCtx.isAuthenticated ? <AuthenticatedStack /> : <AuthStack />}
+          </NavigationContainer>
+        </AuthContextProvider>
       </ThemeProvider>
     </AnimatedAppLoader>
   );
