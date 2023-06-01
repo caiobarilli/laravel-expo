@@ -1,9 +1,6 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { Animated, StyleSheet, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { registerRootComponent } from "expo";
-import { Asset } from "expo-asset";
 import Constants from "expo-constants";
 import * as SplashScreen from "expo-splash-screen";
 import {
@@ -20,6 +17,7 @@ import Welcome from "./screens/Welcome";
 import Login from "./screens/Login";
 import Register from "./screens/Register";
 import { AnimatedAppLoader } from "./components/AnimatedAppLoader";
+import { StatusBar } from "expo-status-bar";
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
@@ -35,6 +33,29 @@ function RegisterScreen({ navigation }: any) {
   return <Register navigation={navigation} />;
 }
 
+function AuthenticatedStack() {
+  const Stack = createNativeStackNavigator();
+  return (
+    <Stack.Navigator initialRouteName="Home">
+      <Stack.Screen
+        name="Home"
+        component={MainScreen}
+        options={{ header: () => null }}
+      />
+      <Stack.Screen
+        name="Login"
+        component={LoginScreen}
+        options={{ header: () => null }}
+      />
+      <Stack.Screen
+        name="Register"
+        component={RegisterScreen}
+        options={{ header: () => null }}
+      />
+    </Stack.Navigator>
+  );
+}
+
 function App() {
   const Stack = createNativeStackNavigator();
   const [fontsLoaded] = useFonts({
@@ -47,25 +68,10 @@ function App() {
 
   return (
     <AnimatedAppLoader image={{ uri: Constants.manifest?.splash?.image ?? "" }}>
+      <StatusBar style="auto" />
       <ThemeProvider theme={theme}>
         <NavigationContainer>
-          <Stack.Navigator initialRouteName="Home">
-            <Stack.Screen
-              name="Home"
-              component={MainScreen}
-              options={{ header: () => null }}
-            />
-            <Stack.Screen
-              name="Login"
-              component={LoginScreen}
-              options={{ header: () => null }}
-            />
-            <Stack.Screen
-              name="Register"
-              component={RegisterScreen}
-              options={{ header: () => null }}
-            />
-          </Stack.Navigator>
+          <AuthenticatedStack />
         </NavigationContainer>
       </ThemeProvider>
     </AnimatedAppLoader>
