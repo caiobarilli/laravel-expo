@@ -1,8 +1,17 @@
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { View, Text } from "react-native";
 import { registerRootComponent } from "expo";
 import Constants from "expo-constants";
 import * as SplashScreen from "expo-splash-screen";
+import { StatusBar } from "expo-status-bar";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import AuthContextProvider, { useAuth } from "./utils/store/AuthContext";
+import { AnimatedAppLoader } from "./components/AnimatedAppLoader";
+import Welcome from "./screens/Welcome";
+import Login from "./screens/Login";
+import Register from "./screens/Register";
+import theme from "./styles/theme";
+import { ThemeProvider } from "styled-components";
 import {
   useFonts,
   Roboto_400Regular,
@@ -11,17 +20,6 @@ import {
   Roboto_700Bold,
   Roboto_900Black,
 } from "@expo-google-fonts/roboto";
-import { ThemeProvider } from "styled-components";
-import theme from "./styles/theme";
-import Welcome from "./screens/Welcome";
-import Login from "./screens/Login";
-import Register from "./screens/Register";
-import { AnimatedAppLoader } from "./components/AnimatedAppLoader";
-import { StatusBar } from "expo-status-bar";
-
-import AuthContextProvider, { AuthContext } from "./utils/store/AuthContext";
-import { useContext } from "react";
-import { View, Text } from "react-native";
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
@@ -74,9 +72,19 @@ function AuthenticatedStack() {
   );
 }
 
-function App() {
-  const authCtx = useContext(AuthContext);
+function Root() {
+  const { isAuthenticated } = useAuth();
 
+  return (
+    <>
+      <NavigationContainer>
+        {isAuthenticated ? <AuthenticatedStack /> : <AuthStack />}
+      </NavigationContainer>
+    </>
+  );
+}
+
+function App() {
   const [fontsLoaded] = useFonts({
     Roboto_400Regular,
     Roboto_400Regular_Italic,
@@ -90,9 +98,7 @@ function App() {
       <StatusBar style="auto" />
       <ThemeProvider theme={theme}>
         <AuthContextProvider>
-          <NavigationContainer>
-            {authCtx.isAuthenticated ? <AuthenticatedStack /> : <AuthStack />}
-          </NavigationContainer>
+          <Root />
         </AuthContextProvider>
       </ThemeProvider>
     </AnimatedAppLoader>

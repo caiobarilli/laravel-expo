@@ -1,5 +1,11 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { createContext, ReactNode, useEffect, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 
 interface AuthContextType {
   token: string | null;
@@ -12,14 +18,16 @@ interface AuthContextProviderProps {
   children: ReactNode;
 }
 
-export const AuthContext = createContext<AuthContextType>({
+const AuthContext = createContext<AuthContextType>({
   token: null,
   isAuthenticated: false,
   authenticate: (token) => {},
   logout: () => {},
 });
 
-function AuthContextProvider({ children }: AuthContextProviderProps) {
+export const useAuth = () => useContext(AuthContext);
+
+export function AuthContextProvider({ children }: AuthContextProviderProps) {
   const [authToken, setAuthToken] = useState<string | null>(null);
 
   useEffect(() => {
