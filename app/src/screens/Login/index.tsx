@@ -16,10 +16,7 @@ const Login: React.FC<any> = ({ navigation }: LoginProps) => {
         <Title>Login</Title>
         <Input placeholder="E-mail" keyboardType="email-address" />
         <Input placeholder="Password" secureTextEntry={true} />
-        <Button
-          title="Login"
-          onPress={() => navigation.navigate("ForgotPassword")}
-        />
+        <Button title="Login" onPress={() => navigation.navigate("Login")} />
       </S.FormContainer>
       <S.RegisterWrapper>
         <Text>Don't have an account? </Text>
