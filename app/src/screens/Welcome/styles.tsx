@@ -19,10 +19,3 @@ export const WelcomeWrapper = styled.View`
   align-items: center;
   justify-content: center;
 `;
-
-export const WelcomeParagraph = styled.Text`
-  color: ${({ theme }) => theme.colors.text};
-  margin-top: 10px;
-  margin-bottom: 10px;
-  text-transform: uppercase;
-`;

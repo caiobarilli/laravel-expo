@@ -1,4 +1,17 @@
 import React from "react";
-import * as S from "./styles";
+import { TextProps } from "react-native";
+import { TitleText } from "./styles";
 
-export default () => <S.Container />;
+interface TitleProps extends TextProps {
+  size?: "small" | "larger";
+}
+
+const Title: React.FC<TitleProps> = ({ children, size, ...rest }) => {
+  return (
+    <TitleText size={size} {...rest}>
+      {children}
+    </TitleText>
+  );
+};
+
+export default Title;

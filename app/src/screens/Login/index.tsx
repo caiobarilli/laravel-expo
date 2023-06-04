@@ -1,25 +1,34 @@
 import React from "react";
+import Title from "../../components/Title";
+import Text from "../../components/Text";
+import Input from "../../components/Input";
+import Button from "../../components/Button";
 import * as S from "./styles";
 
 interface LoginProps {
   navigation: any;
 }
 
-export default ({ navigation }: LoginProps) => (
-  <S.Container>
-    <S.FormContainer>
-      <S.Title>Login</S.Title>
-      <S.Input placeholder="E-mail" keyboardType="email-address" />
-      <S.Input placeholder="Password" secureTextEntry={true} />
-      <S.Button>
-        <S.ButtonText>Login</S.ButtonText>
-      </S.Button>
-    </S.FormContainer>
-    <S.RegisterWrapper>
-      <S.RegisterText>Don't have an account? </S.RegisterText>
-      <S.RegisterButton onPress={() => navigation.navigate("Register")}>
-        <S.RegisterTextBold>Register a new account.</S.RegisterTextBold>
-      </S.RegisterButton>
-    </S.RegisterWrapper>
-  </S.Container>
-);
+const Login: React.FC<any> = ({ navigation }: LoginProps) => {
+  return (
+    <S.Container>
+      <S.FormContainer>
+        <Title>Login</Title>
+        <Input placeholder="E-mail" keyboardType="email-address" />
+        <Input placeholder="Password" secureTextEntry={true} />
+        <Button
+          title="Login"
+          onPress={() => navigation.navigate("ForgotPassword")}
+        />
+      </S.FormContainer>
+      <S.RegisterWrapper>
+        <Text>Don't have an account? </Text>
+        <Text hasLink onPress={() => navigation.navigate("Register")}>
+          Register a new account.
+        </Text>
+      </S.RegisterWrapper>
+    </S.Container>
+  );
+};
+
+export default Login;
