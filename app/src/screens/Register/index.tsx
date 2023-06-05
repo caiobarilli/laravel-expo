@@ -5,7 +5,7 @@ import Input from "../../components/Input";
 import Button from "../../components/Button";
 import * as S from "./styles";
 
-const Register: React.FC<any> = ({ navigation }: RegisterScreenProps) => {
+const Register: React.FC<RegisterScreenProps> = ({ navigation }) => {
   return (
     <S.Container>
       <S.FormContainer>

@@ -6,7 +6,7 @@ import Input from "../../components/Input";
 import Button from "../../components/Button";
 import * as S from "./styles";
 
-const Login: React.FC<any> = ({ navigation }: LoginScreenProps) => {
+const Login: React.FC<LoginScreenProps> = ({ navigation }) => {
   return (
     <S.Container>
       <S.FormContainer>

@@ -4,7 +4,7 @@ import React from "react";
 import Title from "../../components/Title";
 import Button from "../../components/Button";
 
-const Welcome: React.FC<any> = ({ navigation }: MainScreenProps) => {
+const Welcome: React.FC<MainScreenProps> = ({ navigation }) => {
   return (
     <S.Container>
       <Title size="larger">Welcome</Title>
