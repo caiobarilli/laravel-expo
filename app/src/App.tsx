@@ -1,18 +1,15 @@
-import { View, Text } from "react-native";
 import { registerRootComponent } from "expo";
 import Constants from "expo-constants";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { NavigationContainer, NavigationProp } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
-import { NativeStackScreenProps } from "react-native-screens/lib/typescript/native-stack";
-
 import AuthContextProvider, { useAuth } from "./utils/store/AuthContext";
 import { AnimatedAppLoader } from "./components/AnimatedAppLoader";
 import Welcome from "./screens/Welcome";
 import Login from "./screens/Login";
 import Register from "./screens/Register";
+import Home from "./screens/Home";
 import theme from "./styles/theme";
 import { ThemeProvider } from "styled-components";
 import {
@@ -26,10 +23,14 @@ import {
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
-export type AuthStackParamList = {
+type AuthStackParamList = {
   Main: undefined;
   Login: undefined;
   Register: undefined;
+};
+
+type AuthenticatedStackParamList = {
+  Home: undefined;
 };
 
 export type MainScreenProps = {
@@ -79,17 +80,24 @@ function AuthStack() {
   );
 }
 
+export type HomeScreenProps = {
+  navigation: NavigationProp<AuthenticatedStackParamList, "Home">;
+};
+
+function HomeScreen({ navigation }: HomeScreenProps) {
+  return <Home navigation={navigation} />;
+}
+
 function AuthenticatedStack() {
+  const Stack = createNativeStackNavigator();
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text>AuthenticatedStack</Text>
-    </View>
+    <Stack.Navigator initialRouteName="Main">
+      <Stack.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{ header: () => null }}
+      />
+    </Stack.Navigator>
   );
 }
 
