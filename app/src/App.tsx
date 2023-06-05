@@ -3,8 +3,11 @@ import { registerRootComponent } from "expo";
 import Constants from "expo-constants";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, NavigationProp } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+import { NativeStackScreenProps } from "react-native-screens/lib/typescript/native-stack";
+
 import AuthContextProvider, { useAuth } from "./utils/store/AuthContext";
 import { AnimatedAppLoader } from "./components/AnimatedAppLoader";
 import Welcome from "./screens/Welcome";
@@ -23,24 +26,42 @@ import {
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
-function MainScreen({ navigation }: any) {
+export type AuthStackParamList = {
+  Main: undefined;
+  Login: undefined;
+  Register: undefined;
+};
+
+export type MainScreenProps = {
+  navigation: NavigationProp<AuthStackParamList, "Main">;
+};
+
+export type LoginScreenProps = {
+  navigation: NavigationProp<AuthStackParamList, "Login">;
+};
+
+export type RegisterScreenProps = {
+  navigation: NavigationProp<AuthStackParamList, "Register">;
+};
+
+function MainScreen({ navigation }: MainScreenProps) {
   return <Welcome navigation={navigation} />;
 }
 
-function LoginScreen({ navigation }: any) {
+function LoginScreen({ navigation }: LoginScreenProps) {
   return <Login navigation={navigation} />;
 }
 
-function RegisterScreen({ navigation }: any) {
+function RegisterScreen({ navigation }: RegisterScreenProps) {
   return <Register navigation={navigation} />;
 }
 
 function AuthStack() {
   const Stack = createNativeStackNavigator();
   return (
-    <Stack.Navigator initialRouteName="Home">
+    <Stack.Navigator initialRouteName="Main">
       <Stack.Screen
-        name="Home"
+        name="Main"
         component={MainScreen}
         options={{ header: () => null }}
       />

@@ -1,15 +1,12 @@
 import React from "react";
+import { LoginScreenProps } from "../../App";
 import Title from "../../components/Title";
 import Text from "../../components/Text";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import * as S from "./styles";
 
-interface LoginProps {
-  navigation: any;
-}
-
-const Login: React.FC<any> = ({ navigation }: LoginProps) => {
+const Login: React.FC<any> = ({ navigation }: LoginScreenProps) => {
   return (
     <S.Container>
       <S.FormContainer>

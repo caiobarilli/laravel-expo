@@ -6,8 +6,3 @@ export const Container = styled.View`
   justify-content: center;
   background: ${({ theme }) => theme.colors.background};
 `;
-
-export const WelcomeWrapper = styled.View`
-  align-items: center;
-  justify-content: center;
-`;

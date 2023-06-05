@@ -1,13 +1,10 @@
+import * as S from "./styles";
+import { MainScreenProps } from "../../App";
 import React from "react";
 import Title from "../../components/Title";
 import Button from "../../components/Button";
-import * as S from "./styles";
 
-interface WelcomeProps {
-  navigation: any;
-}
-
-const Welcome: React.FC<any> = ({ navigation }: WelcomeProps) => {
+const Welcome: React.FC<any> = ({ navigation }: MainScreenProps) => {
   return (
     <S.Container>
       <Title size="larger">Welcome</Title>
