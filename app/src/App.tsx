@@ -105,11 +105,9 @@ function Root() {
   const { isAuthenticated } = useAuth();
 
   return (
-    <>
-      <NavigationContainer>
-        {isAuthenticated ? <AuthenticatedStack /> : <AuthStack />}
-      </NavigationContainer>
-    </>
+    <NavigationContainer>
+      {isAuthenticated ? <AuthenticatedStack /> : <AuthStack />}
+    </NavigationContainer>
   );
 }
 
