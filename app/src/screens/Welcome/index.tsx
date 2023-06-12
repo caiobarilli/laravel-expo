@@ -1,8 +1,8 @@
-import * as S from "./styles";
-import { MainScreenProps } from "../../App";
 import React from "react";
+import { MainScreenProps } from "../../App";
 import Title from "../../components/Title";
 import Button from "../../components/Button";
+import * as S from "./styles";
 
 const Welcome: React.FC<MainScreenProps> = ({ navigation }) => {
   return (
