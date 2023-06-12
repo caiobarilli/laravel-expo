@@ -4,7 +4,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { NavigationContainer, NavigationProp } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import AuthContextProvider, { useAuth } from "./utils/store/AuthContext";
+import AuthContextProvider, { useAuth } from "./utils/store/auth-context";
 import { AnimatedAppLoader } from "./components/AnimatedAppLoader";
 import Welcome from "./screens/Welcome";
 import Login from "./screens/Login";
@@ -101,7 +101,7 @@ function AuthenticatedStack() {
   );
 }
 
-function Root() {
+function Navigation() {
   const { isAuthenticated } = useAuth();
 
   return (
@@ -109,6 +109,12 @@ function Root() {
       {isAuthenticated ? <AuthenticatedStack /> : <AuthStack />}
     </NavigationContainer>
   );
+}
+
+function Root() {
+  const { isAuthenticated } = useAuth();
+
+  return <Navigation />;
 }
 
 function App() {
