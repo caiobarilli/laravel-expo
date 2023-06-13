@@ -36,13 +36,25 @@ const Login: React.FC<LoginScreenProps> = ({ navigation }) => {
     return <LoadingOverlay message="Loading ..." />;
   }
 
+  const loginHandler = async () => {
+    setAppIsReady(false);
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+    } catch (e) {
+      console.warn(e);
+    } finally {
+      // Tell the application to render
+      setAppIsReady(true);
+    }
+  };
+
   return (
     <S.Container onLayout={onLayoutRootView}>
       <S.FormContainer>
         <Title>Login</Title>
         <Input placeholder="E-mail" keyboardType="email-address" />
         <Input placeholder="Password" secureTextEntry={true} />
-        <Button title="Login" onPress={() => navigation.navigate("Login")} />
+        <Button title="Login" onPress={loginHandler} />
       </S.FormContainer>
       <S.RegisterWrapper>
         <Text>Don't have an account? </Text>
