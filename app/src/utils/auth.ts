@@ -1,23 +1,20 @@
 import axios from "axios";
-
-const API_KEY = " ";
+import Constants from "expo-constants";
 
 async function authenticate(
   mode: string,
   email: string,
   password: string
 ): Promise<string> {
-  const url = ``;
+  const response = await axios.post(
+    Constants.expoConfig?.extra?.apiUrl + "auth/login",
+    {
+      email: email,
+      password: password,
+    }
+  );
 
-  const response = await axios.post(url, {
-    email: email,
-    password: password,
-    returnSecureToken: true,
-  });
-
-  const token = response.data.idToken;
-
-  return token;
+  return response.data.access_token;
 }
 
 export function createUser(email: string, password: string): Promise<string> {

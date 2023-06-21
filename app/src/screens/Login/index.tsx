@@ -5,8 +5,9 @@ import Text from "../../components/Text";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import LoadingOverlay from "../../components/LoadingOverlay";
-import * as S from "./styles";
 import * as SplashScreen from "expo-splash-screen";
+import { login } from "../../utils/auth";
+import * as S from "./styles";
 
 const Login: React.FC<LoginScreenProps> = ({ navigation }) => {
   const [appIsReady, setAppIsReady] = useState(false);
@@ -39,7 +40,7 @@ const Login: React.FC<LoginScreenProps> = ({ navigation }) => {
   const loginHandler = async () => {
     setAppIsReady(false);
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await login("admin@admin.com", "secret");
     } catch (e) {
       console.warn(e);
     } finally {

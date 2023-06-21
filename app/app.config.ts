@@ -29,4 +29,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   web: {
     favicon: "./src/assets/favicon.png",
   },
+  extra: {
+    apiUrl: "http://172.29.164.34:8000/api/",
+  },
 });
